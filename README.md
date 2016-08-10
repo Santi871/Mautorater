@@ -32,4 +32,4 @@ Both files should go in the `main.py` folder.
 Usage: `/lock [submission_url] [lock_message]`
 
 Have in mind the lock message will be posted as-is to reddit. You can use the usual Markdown synthax and
-newlines (by pressing shift+Enter)
+newlines (by pressing shift+Enter). **Be careful, if you press Enter the command will be sent.**
