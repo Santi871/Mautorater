@@ -158,19 +158,6 @@ class SlackResponse:
 
         return request_response
 
-    def update_message(self, timestamp, channel, parse='full'):
-
-        response_dict = self.get_dict()
-        response_dict['attachments'] = json.dumps(self.response_dict['attachments'])
-        response_dict['channel'] = channel
-        response_dict['token'] = SLACK_BOT_TOKEN
-        response_dict['ts'] = timestamp
-        response_dict['as_user'] = 'true'
-        response_dict['parse'] = parse
-
-        request_response = requests.post('https://slack.com/api/chat.update',
-                                         params=response_dict)
-
 
 class SlackRequest:
 
@@ -226,47 +213,3 @@ class SlackRequest:
 
         return slack_response
 
-
-def grab_attachment_args(original_message):
-    attachment_text = original_message['attachments'][0]['text']
-    attachment_title = original_message['attachments'][0]['title']
-
-    attachment_title_link = original_message['attachments'][0].get('title_link', '')
-
-    field = original_message['attachments'][0].get('fields', None)
-
-    if field is not None:
-        field = field[0]
-
-    return {'text': attachment_text, 'title': attachment_title, 'title_link': attachment_title_link, 'field': field}
-
-
-class UnflairedSubmission:
-
-    def __init__(self, submission, comment):
-        self.submission = submission
-        self.comment = comment
-
-
-def generate_flair_comment(s1, s2, s3):
-    comment = ("""Hi /u/%s,
-
-It looks like you haven't assigned a category flair to your question, so it has been automatically removed.
-You can assign a category flair to your question by clicking the *flair* button under it.
-
-Shortly after you have assigned a category flair to your question, it will be automatically re-approved and
- this message
-will be deleted.
-
-**Mobile users:** some reddit apps don't support flair selection (including the official one). In order to
- flair your
-question, open it in your phone's web browser by clicking [this link](%s) and select
-flair as you would in a desktop computer.
-
----
-
-*I am a bot, and this action was performed automatically.
-Please [contact the moderators](%s) if you have any questions or concerns*
-""") % (s1, s3, s2)
-
-    return comment
