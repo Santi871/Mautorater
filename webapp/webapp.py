@@ -11,11 +11,6 @@ app = Flask(__name__)
 bot = RedditBot()
 
 
-@app.route('/slack/tifu')
-def hi():
-    return "Hi!"
-
-
 @app.route('/slack/tifu/commands', methods=['POST'])
 def command():
     if request.form.get('token') == SLACK_SLASHCMDS_SECRET and request.form.get('command') == '/lock':
