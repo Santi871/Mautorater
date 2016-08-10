@@ -10,7 +10,7 @@ class RedditBot:
     """Class that implements a Reddit bot to perform moderator actions in a specific subreddit"""
 
     def __init__(self):
-        handler = MultiprocessHandler
+        handler = MultiprocessHandler()
         self.r = praw.Reddit(user_agent="windows:Mautorater 0.1 by /u/santi871", handler=handler)
         self._authenticate()
 
