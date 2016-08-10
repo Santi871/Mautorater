@@ -39,6 +39,7 @@ class RedditBot:
         except:
             response = utils.SlackResponse()
             response.add_attachment(text="Oops, something went wrong, contact /u/Santi871", color='danger')
+            print(traceback.format_exc())
 
         requests.post(response_url, data=response.get_json(), headers={'Content-type': 'application/json'})
 
