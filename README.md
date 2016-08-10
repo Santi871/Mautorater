@@ -1,6 +1,5 @@
 # Mautorater
 
-
 ## Dependencies
 
 ### Python 3 packages
@@ -8,7 +7,6 @@
 * PRAW
 * PRAW-OAuth2Util
 * Flask
-
 
 ## Setup
 

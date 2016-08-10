@@ -4,6 +4,7 @@ from praw.handlers import MultiprocessHandler
 import reddit_interface.utils as utils
 from reddit_interface.bot_threading import own_thread
 import requests
+import traceback
 
 
 class RedditBot:
@@ -26,14 +27,18 @@ class RedditBot:
         lock_message = kwargs['lock_message']
         response_url = kwargs['response_url']
 
-        submission = self.r.get_submission(url=submission_url)
-        comment = submission.add_comment(lock_message)
-        submission.lock()
-        comment.distinguish(sticky=True)
+        try:
+            submission = self.r.get_submission(url=submission_url)
+            comment = submission.add_comment(lock_message)
+            submission.lock()
+            comment.distinguish(sticky=True)
 
-        response = utils.SlackResponse()
-        response.add_attachment(text="Submission locked successfully.", color='good', title=submission.title,
-                                title_link=submission.permalink)
+            response = utils.SlackResponse()
+            response.add_attachment(text="Submission locked successfully.", color='good', title=submission.title,
+                                    title_link=submission.permalink)
+        except:
+            response = utils.SlackResponse()
+            response.add_attachment(text="Oops, something went wrong, contact /u/Santi871", color='danger')
 
         requests.post(response_url, data=response.get_json(), headers={'Content-type': 'application/json'})
 
